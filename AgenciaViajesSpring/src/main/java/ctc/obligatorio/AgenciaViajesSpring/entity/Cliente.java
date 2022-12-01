@@ -12,21 +12,27 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+//Esta clase se utiliza para indicar que esta clase es una entidad
 @Entity
+//Esta clase se utiliza para indicar que la referencia a la tabla es por el atributo id
 @PrimaryKeyJoinColumn(referencedColumnName = "id")
+//Esta clase se utiliza para indicar que esta clase se mapea a una tabla con el nombre "cliente"
 @Table(name = "clientes")
 public class Cliente extends Persona {
 
+    //Como no es un usuario del tipo adeministrador, este atributo siempre es false
     private Boolean esAdministrador = false;
     //un cliente puede ser vip o no dependiendo de la cantidad de viajes que haya realizado si es mayor a 3 es vip
     private Boolean esVip;
     
-
+    //Se utiliza la anotacion @ManyToMany para indicar que este atributo es una relacion muchos a muchos y se utiliza cascade para indicar que si se borra un cliente se borran los viajes que tiene asociados
     @ManyToMany(cascade = CascadeType.ALL)
+    //Se utiliza la anotacion @JoinTable para indicar que la tabla intermedia se llama "cliente_viaje" y que la columna que referencia al cliente es "cliente_id" y la que referencia al viaje es "viaje_id"
     @JoinTable(
         name = "clientes_viajes", 
         joinColumns = @JoinColumn(name = "id_cliente", referencedColumnName = "id"), 
         inverseJoinColumns = @JoinColumn(name = "id_viaje", referencedColumnName = "id"))
+    //Lista de viajes que tiene asociados el cliente    
     private List<Viaje> viajes= new ArrayList<Viaje>();
 
     public Boolean getEsAdministrador() {
@@ -38,6 +44,7 @@ public class Cliente extends Persona {
     }
 
     public Boolean getEsVip() {
+        //Si la cantidad de viajes es mayor a 3 es vip
         if (this.viajes.size() >= 3) {
             this.esVip = true;
          } else {
@@ -47,6 +54,7 @@ public class Cliente extends Persona {
     }
 
     public void setEsVip() {
+        //Si la cantidad de viajes es mayor a 3 es vip
         if (this.viajes.size() >= 3) {
             this.esVip = true;
         } else {

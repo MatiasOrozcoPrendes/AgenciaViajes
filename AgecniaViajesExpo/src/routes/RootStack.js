@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 const Stack = createStackNavigator();
 
+//Se importan los componentes de las diferentes pantallas
 import Principal from "../screens/Principal";
 import Cliente from "../screens/Cliente";
 import Administrador from "../screens/Administrador";
@@ -17,7 +18,11 @@ import ListarViajesAnteriores from "../screens/ListarViajesAnteriores";
 const RootStack = () => {
   return (
     <NavigationContainer>
+        {/* Se indica en que pantalla se inicia la app */}
         <Stack.Navigator initialRouteName="Principal">
+            {/* Se indica el nombre de la pantalla y el componente que se va a renderizar 
+            ademas de los parametros que se le pasan a la pantalla 
+            como el color del header y el titulo */}
             <Stack.Screen
                 name="Inicio"
                 component={Principal}
